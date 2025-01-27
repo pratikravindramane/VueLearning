@@ -5,14 +5,16 @@ const status = ref(true)
 const newTask = ref('')
 let tasks = ref(['Task One', 'Task Two', 'Task Three'])
 const toggle = () => {
-  this.status = !this.status
-  console.log(this.status)
+  status.value = !status.value
 }
 
 const addTask = () => {
   if (newTask.value.trim() == '') return
   tasks.value.push(newTask.value)
   newTask.value = ''
+}
+const deleteTask = (val) => {
+  tasks.value.splice(val, 1)
 }
 </script>
 <template>
@@ -23,8 +25,9 @@ const addTask = () => {
   <button @click="addTask">submit</button>
   <h3>Tasks:</h3>
   <ul>
-    <li v-for="task in tasks" :key="task">
+    <li v-for="(task, index) in tasks" :key="task">
       {{ task }}
+      <button @click="deleteTask(index)">D</button>
     </li>
   </ul>
 
